@@ -52,7 +52,7 @@ class UserAvatar extends StatelessWidget {
           backgroundImage: hasImage
               ? NetworkImage(author.imageUrl!, headers: imageHeaders)
               : null,
-          radius: 16,
+          radius: 22,
           child: !hasImage
               ? Text(
                   initials,

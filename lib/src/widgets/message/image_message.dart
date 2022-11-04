@@ -74,9 +74,11 @@ class _ImageMessageState extends State<ImageMessage> {
       );
     } else if (_size.aspectRatio < 0.1 || _size.aspectRatio > 10) {
       return Container(
+        // InheritedChatTheme.of(context).theme.secondaryColor
         color: user.id == widget.message.author.id
             ? InheritedChatTheme.of(context).theme.primaryColor
-            : InheritedChatTheme.of(context).theme.secondaryColor,
+        // Sen Edited.
+            : Colors.white,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

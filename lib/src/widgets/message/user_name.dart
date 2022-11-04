@@ -18,7 +18,7 @@ class UserName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = InheritedChatTheme.of(context).theme;
-    final color = getUserAvatarNameColor(author, theme.userAvatarNameColors);
+    //final color = getUserAvatarNameColor(author, theme.userAvatarNameColors);
     final name = getUserName(author);
 
     return name.isEmpty
@@ -29,7 +29,7 @@ class UserName extends StatelessWidget {
               name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: theme.userNameTextStyle.copyWith(color: color),
+              style: TextStyle(color: Colors.black45, fontSize: 12),
             ),
           );
   }

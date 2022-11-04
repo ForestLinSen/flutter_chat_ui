@@ -32,7 +32,9 @@ const neutral0 = Color(0xff1d1c21);
 const neutral2 = Color(0xff9e9cab);
 
 /// N7.
-const neutral7 = Color(0xffffffff);
+/// Sen Edited
+//const neutral7 = Color(0xffffffff);
+const neutral7 = Colors.white70;
 
 /// N7 with opacity.
 const neutral7WithOpacity = Color(0x80ffffff);
@@ -377,7 +379,9 @@ class DefaultChatTheme extends ChatTheme {
     super.sentMessageBodyCodeTextStyle,
     super.sentMessageBodyLinkTextStyle,
     super.sentMessageBodyTextStyle = const TextStyle(
-      color: neutral7,
+      // Sen Edited.
+      color: Colors.black,
+      //color: neutral7,
       fontSize: 16,
       fontWeight: FontWeight.w500,
       height: 1.5,

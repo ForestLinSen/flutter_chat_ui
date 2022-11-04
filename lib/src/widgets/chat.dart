@@ -16,9 +16,11 @@ import '../models/preview_image.dart';
 import '../models/unread_header_data.dart';
 import '../util.dart';
 import 'chat_list.dart';
+import 'header_user_image.dart';
 import 'image_gallery.dart';
 import 'input/input.dart';
 import 'message/message.dart';
+import 'message/notification_message.dart';
 import 'message/system_message.dart';
 import 'message/text_message.dart';
 import 'state/inherited_chat_theme.dart';
@@ -92,7 +94,7 @@ class Chat extends StatefulWidget {
     required this.user,
     this.userAgent,
     this.useTopSafeAreaInset,
-    this.videoMessageBuilder,
+    this.videoMessageBuilder, this.notificationMessageOptions = const NotificationMessageOptions(),
   });
 
   /// See [Message.audioMessageBuilder].
@@ -289,6 +291,8 @@ class Chat extends StatefulWidget {
   /// See [Message.textMessageOptions].
   final TextMessageOptions textMessageOptions;
 
+  final NotificationMessageOptions notificationMessageOptions;
+
   /// Chat theme. Extend [ChatTheme] class to create your own theme or use
   /// existing one, like the [DefaultChatTheme]. You can customize only certain
   /// properties, see more here [DefaultChatTheme].
@@ -410,6 +414,71 @@ class ChatState extends State<Chat> {
                   color: widget.theme.backgroundColor,
                   child: Column(
                     children: [
+                      // Heading Banner.
+                      Container(
+                        color: Colors.pinkAccent,
+                        height: 35,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "2/4 rvsp'd",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                "12 days left",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                "3 roles assigned",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Groups members avatars.
+                          Container(
+                            height: 90,
+                            color: Colors.white,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                HeaderUserImage(imageUrl: 'assets/images/pexels-photo-1310522.jpeg', support: false),
+                                HeaderUserImage(imageUrl: 'assets/images/pexels-photo-697509.jpeg', support: true),
+                                HeaderUserImage(imageUrl: 'assets/images/pexels-photo-220453.jpeg', support: true),
+                                HeaderUserImage(imageUrl: 'assets/images/pexels-pixabay-38554.jpg', support: true),
+                              ],
+                            ),
+                          ),
+
+                          // Add friend button.
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              children: [
+                                Text("Add friend"),
+                                Icon(Icons.add),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                      
                       Flexible(
                         child: widget.messages.isEmpty
                             ? SizedBox.expand(
@@ -585,6 +654,7 @@ class ChatState extends State<Chat> {
           usePreviewData: widget.usePreviewData,
           userAgent: widget.userAgent,
           videoMessageBuilder: widget.videoMessageBuilder,
+          notificationMessageOptions: widget.notificationMessageOptions,
         );
       }
 

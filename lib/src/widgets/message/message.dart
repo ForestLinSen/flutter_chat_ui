@@ -10,6 +10,7 @@ import '../state/inherited_user.dart';
 import 'file_message.dart';
 import 'image_message.dart';
 import 'message_status.dart';
+import 'notification_message.dart';
 import 'text_message.dart';
 import 'user_avatar.dart';
 
@@ -51,7 +52,7 @@ class Message extends StatelessWidget {
     required this.textMessageOptions,
     required this.usePreviewData,
     this.userAgent,
-    this.videoMessageBuilder,
+    this.videoMessageBuilder, required this.notificationMessageOptions,
   });
 
   /// Build an audio message inside predefined bubble.
@@ -164,6 +165,8 @@ class Message extends StatelessWidget {
   /// See [TextMessage.options].
   final TextMessageOptions textMessageOptions;
 
+  final NotificationMessageOptions notificationMessageOptions;
+
   /// See [TextMessage.usePreviewData].
   final bool usePreviewData;
 
@@ -230,6 +233,7 @@ class Message extends StatelessWidget {
               right: isMobile ? query.padding.right : 0,
             ),
       child: Row(
+        // Sen Edited.
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         textDirection: bubbleRtlAlignment == BubbleRtlAlignment.left
@@ -275,7 +279,7 @@ class Message extends StatelessWidget {
           ),
           if (currentUserIsAuthor)
             Padding(
-              padding: InheritedChatTheme.of(context).theme.statusIconPadding,
+              padding: EdgeInsets.all(2),
               child: showStatus
                   ? GestureDetector(
                       onLongPress: () =>
@@ -317,17 +321,21 @@ class Message extends StatelessWidget {
           : enlargeEmojis && hideBackgroundOnEmojiMessages
               ? _messageBuilder()
               : Container(
-                  decoration: BoxDecoration(
-                    borderRadius: borderRadius,
-                    color: !currentUserIsAuthor ||
-                            message.type == types.MessageType.image
-                        ? InheritedChatTheme.of(context).theme.secondaryColor
-                        : InheritedChatTheme.of(context).theme.primaryColor,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: borderRadius,
-                    child: _messageBuilder(),
-                  ),
+                  // Sen Edited.
+                  // decoration: BoxDecoration(
+                  //   borderRadius: borderRadius,
+                  //   // InheritedChatTheme.of(context).theme.primaryColor
+                  //   // Sen Edited
+                  //   color: !currentUserIsAuthor ||
+                  //           message.type == types.MessageType.image
+                  //       ? Colors.white
+                  //       : Colors.black12,
+                  // ),
+                  child: _messageBuilder(),
+
+                  // ClipRRect(
+                  //   borderRadius: borderRadius,
+                  //   child: _messageBuilder(),),
                 );
 
   Widget _messageBuilder() {
@@ -341,7 +349,17 @@ class Message extends StatelessWidget {
         final customMessage = message as types.CustomMessage;
         return customMessageBuilder != null
             ? customMessageBuilder!(customMessage, messageWidth: messageWidth)
-            : const SizedBox();
+            : NotificationMessage(                emojiEnlargementBehavior: emojiEnlargementBehavior,
+          hideBackgroundOnEmojiMessages: hideBackgroundOnEmojiMessages,
+          message:  types.TextMessage(id: customMessage.id,
+            author: customMessage.author, text: customMessage.metadata?['text'] ?? 'No data',),
+          nameBuilder: nameBuilder,
+          onPreviewDataFetched: onPreviewDataFetched,
+          options: notificationMessageOptions,
+          showName: showName,
+          usePreviewData: usePreviewData,
+          userAgent: userAgent,);
+
       case types.MessageType.file:
         final fileMessage = message as types.FileMessage;
         return fileMessageBuilder != null

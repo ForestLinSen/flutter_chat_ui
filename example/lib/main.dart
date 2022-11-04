@@ -46,6 +46,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: Text("Hi"),),
         body: Chat(
           messages: _messages,
           onAttachmentPressed: _handleAttachmentPressed,
