@@ -70,6 +70,7 @@
     "id": "113bb2e8-f74e-42cd-aa30-4085a0f52c59",
     "status": "seen",
     "metadata": {
+      "customType": "notification",
       "text": "Was assigned to Maria",
       "title": "Get a Birthday Cake \uD83C\uDF82"
     },

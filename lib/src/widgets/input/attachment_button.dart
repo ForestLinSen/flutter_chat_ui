@@ -51,7 +51,7 @@ class AttachmentButton extends StatelessWidget {
                 )
               : Transform.rotate(
                   angle: 30 * math.pi / 180,
-                  child: const Icon(Icons.attach_file),
+                  child: const Icon(Icons.attach_file, color: Colors.grey),
                 ),
           onPressed: isLoading ? null : onPressed,
           padding: padding,

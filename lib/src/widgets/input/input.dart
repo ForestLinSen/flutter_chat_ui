@@ -24,6 +24,7 @@ class Input extends StatefulWidget {
     this.onAttachmentPressed,
     required this.onSendPressed,
     this.options = const InputOptions(),
+    required this.onNotificationSendPressed,
   });
 
   /// Whether attachment is uploading. Will replace attachment button with a
@@ -38,6 +39,8 @@ class Input extends StatefulWidget {
   /// Will be called on [SendButton] tap. Has [types.PartialText] which can
   /// be transformed to [types.TextMessage] and added to the messages list.
   final void Function(types.PartialText) onSendPressed;
+
+  final void Function(types.PartialCustom) onNotificationSendPressed;
 
   /// Customisation options for the [Input].
   final InputOptions options;
@@ -169,8 +172,9 @@ class _InputState extends State<Input> {
           color: Colors.white,
           child: Container(
             decoration: BoxDecoration(
-              border: Border(top: BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)))
-            ),
+                border: Border(
+                    top: BorderSide(
+                        width: 1, color: Colors.grey.withOpacity(0.3)))),
             padding: safeAreaInsets,
             child: Row(
               textDirection: TextDirection.ltr,
@@ -183,16 +187,21 @@ class _InputState extends State<Input> {
                   ),
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: Transform.rotate(angle: 15 * math.pi / 180,
-                    child: IconButton(onPressed: () {
-                      showCupertinoModalPopup(context: context, builder: (context) => CustomMessageActionSheet());
-                    },
-                      icon: Icon(
-                        Icons.flash_on_rounded,
-                        color: Colors.grey,
-                      ),
-                    )
-                  ),
+                  child: Transform.rotate(
+                      angle: 15 * math.pi / 180,
+                      child: IconButton(
+                        onPressed: () {
+                          showCupertinoModalPopup(
+                              context: context,
+                              builder: (context) => CustomMessageActionSheet(
+                                  onSendPressed:
+                                      widget.onNotificationSendPressed),);
+                        },
+                        icon: const Icon(
+                          Icons.flash_on_rounded,
+                          color: Colors.grey,
+                        ),
+                      ),),
                 ),
                 Expanded(
                   child: Padding(
@@ -204,15 +213,17 @@ class _InputState extends State<Input> {
                         focusColor: Colors.pinkAccent,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(28.0),
-                          borderSide: const BorderSide(color: Colors.grey, width: 1.5),
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 1.5),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(28.0),
                         ),
                         hintStyle: const TextStyle(color: Colors.grey),
-                        hintText:
-                        'Write a message',
-                        prefix: const SizedBox(width: 10,),
+                        hintText: 'Write a message',
+                        prefix: const SizedBox(
+                          width: 10,
+                        ),
                       ),
                       focusNode: _inputFocusNode,
                       keyboardType: TextInputType.multiline,

@@ -55,7 +55,7 @@ class _ChatPageState extends State<ChatPage> {
           onSendPressed: _handleSendPressed,
           showUserAvatars: true,
           showUserNames: true,
-          user: _user,
+          user: _user, onNotificationSendPressed: _handleNotificationSendPressed,
         ),
       );
 
@@ -222,6 +222,17 @@ class _ChatPageState extends State<ChatPage> {
     );
 
     _addMessage(textMessage);
+  }
+
+  void _handleNotificationSendPressed(types.PartialCustom message) {
+    final customMessage = types.CustomMessage(
+      author: _user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: const Uuid().v4(),
+      metadata: message.metadata,
+    );
+
+    _addMessage(customMessage);
   }
 
   void _loadMessages() async {
