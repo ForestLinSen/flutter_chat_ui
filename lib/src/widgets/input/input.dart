@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -8,6 +9,7 @@ import '../../util.dart';
 import '../state/inherited_chat_theme.dart';
 import '../state/inherited_l10n.dart';
 import 'attachment_button.dart';
+import 'custom_message_action_sheet.dart';
 import 'input_text_field_controller.dart';
 import 'send_button.dart';
 import 'dart:math' as math;
@@ -182,10 +184,14 @@ class _InputState extends State<Input> {
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Transform.rotate(angle: 15 * math.pi / 180,
-                    child: Icon(
-                      Icons.flash_on_rounded,
-                      color: Colors.grey,
-                    ),
+                    child: IconButton(onPressed: () {
+                      showCupertinoModalPopup(context: context, builder: (context) => CustomMessageActionSheet());
+                    },
+                      icon: Icon(
+                        Icons.flash_on_rounded,
+                        color: Colors.grey,
+                      ),
+                    )
                   ),
                 ),
                 Expanded(

@@ -17,9 +17,11 @@ class UserName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = InheritedChatTheme.of(context).theme;
+    // Sen Edited.
+    //final theme = InheritedChatTheme.of(context).theme;
     //final color = getUserAvatarNameColor(author, theme.userAvatarNameColors);
-    final name = getUserName(author);
+    //final name = getUserName(author);
+    final name = author.firstName ?? "";
 
     return name.isEmpty
         ? const SizedBox()
@@ -29,7 +31,7 @@ class UserName extends StatelessWidget {
               name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.black45, fontSize: 12),
+              style: const TextStyle(color: Colors.black45, fontSize: 12),
             ),
           );
   }

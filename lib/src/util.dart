@@ -63,9 +63,11 @@ String getVerboseDateTimeRepresentation(
   final formattedDate = dateFormat != null
       ? dateFormat.format(dateTime)
       : DateFormat.MMMd(dateLocale).format(dateTime);
+
+  // Sen Edited.
   final formattedTime = timeFormat != null
       ? timeFormat.format(dateTime)
-      : DateFormat.Hm(dateLocale).format(dateTime);
+      : DateFormat('h:mma', dateLocale).format(dateTime);
   final localDateTime = dateTime.toLocal();
   final now = DateTime.now();
 

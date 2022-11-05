@@ -148,6 +148,7 @@ class TextMessage extends StatelessWidget {
         ? theme.sentEmojiMessageTextStyle
         : theme.receivedEmojiMessageTextStyle;
 
+
     return Column(
       crossAxisAlignment: user.id == message.author.id ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.end,
@@ -185,7 +186,25 @@ class TextMessage extends StatelessWidget {
 
         const SizedBox(height: 6,),
 
-        UserName(author: message.author),
+        // Sen Edited: add date.
+        Row(
+          mainAxisAlignment: user.id == message.author.id ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            UserName(author: message.author),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Text(
+                ' ${getVerboseDateTimeRepresentation(DateTime.fromMillisecondsSinceEpoch(message.createdAt ?? 0))}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(color: Colors.black45, fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+
+
+
 
         // if (showName)
         //   nameBuilder?.call(message.author.id) ??
