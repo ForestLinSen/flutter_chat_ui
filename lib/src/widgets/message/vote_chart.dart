@@ -14,29 +14,51 @@ class VoteChart extends StatelessWidget {
   final List<num> voteCount;
   final double width;
 
+  int findMaxIndex(List<num> list){
+    var max = list[0];
+    var maxIndex = 0;
+    for(var i=0; i<list.length; i++){
+      if(list[i] > max){
+        max = list[i];
+        maxIndex = i;
+      }
+    }
+    return maxIndex;
+  }
+
   @override
   Widget build(BuildContext context) {
     final totalCount = voteCount.reduce((a, b) => a + b).toDouble();
+    final maxIndex = findMaxIndex(voteCount);
+
     return ListView.builder(
       shrinkWrap: true,
+      padding: const EdgeInsets.only(bottom: 10),
       itemBuilder: (context, i) {
         final ratio = voteCount[i] == 0 ? 0 : voteCount[i].toDouble() / totalCount;
         return Container(
           padding: const EdgeInsets.only(left: 10, bottom: 10),
           child: Row(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: max(0.6 * width * ratio, 70),
-                padding: EdgeInsets.only(left: 5, top: 2, bottom: 2),
-                child: Text(
-                  options[i],
-                  style: TextStyle(color: Colors.white),
+              Stack(children: [
+                Container(
+                  width: max(0.7 * width * ratio, 5),
+                  height: 22,
+                  padding: const EdgeInsets.only(left: 5, top: 2, bottom: 2),
+                  decoration: BoxDecoration(
+                      color: i == maxIndex && totalCount != 0 ? Colors.pinkAccent : Colors.black.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(5),),
                 ),
-                decoration: BoxDecoration(
-                    color: Colors.pinkAccent,
-                    borderRadius: BorderRadius.circular(5)),
-              ),
+
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Text(
+                    options[i],
+                    style: TextStyle(color: i == maxIndex && totalCount != 0 ? Colors.white : Colors.black),
+                  ),
+                ),
+              ],),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child:

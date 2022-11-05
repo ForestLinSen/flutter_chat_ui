@@ -59,7 +59,8 @@ class VoteMessage extends StatelessWidget {
             width: min(MediaQuery.of(context).size.width * 0.90, 1200),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.pinkAccent)),
+                border: Border.all(color: Colors.pinkAccent, width: 1.5),
+            ),
             clipBehavior: Clip.hardEdge,
             child: Column(
               children: [
@@ -84,15 +85,19 @@ class VoteMessage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
+
+                // Vote Chart.
                 VoteChart(
                   options: [
                     "Option1",
                     "Option2",
+                    "Option3",
+                    "Option4",
                   ],
-                  voteCount: [0, 10],
+                  voteCount: [0,0,0,0],
                   width: min(MediaQuery.of(context).size.width * 0.90, 1200),
                 ),
               ],
