@@ -60,7 +60,6 @@
     "text": "Awesome! 😍",
     "type": "text"
   },
-
   {
     "author": {
       "firstName": "Matthew",
@@ -70,10 +69,27 @@
     "createdAt": 1655624462300,
     "id": "113bb2e8-f74e-42cd-aa30-4085a0f52c59",
     "status": "seen",
-    "text": "Awesome! 😍",
+    "metadata": {
+      "text": "Was assigned to Maria",
+      "title": "Get a Birthday Cake \uD83C\uDF82"
+    },
     "type": "custom"
   },
-
+  {
+    "author": {
+      "firstName": "Matthew",
+      "id": "82091022-a484-4a89-ae75-a22bf8d6f3bc",
+      "lastName": "White"
+    },
+    "createdAt": 1655624462300,
+    "id": "113bb2e8-f74e-42cd-aa30-4085a0f52c29",
+    "metadata": {
+      "customType": "vote",
+      "text": "Was assigned to Maria",
+      "title": "Get a Birthday Cake \uD83C\uDF82"
+    },
+    "type": "custom"
+  },
   {
     "author": {
       "firstName": "Janice",
@@ -83,9 +99,7 @@
     },
     "createdAt": 1655624462000,
     "id": "22212d42-1252-4641-9786-d6f83b2ce4a8",
-    "status": "seen",
     "text": "Matt, what do you think?",
     "type": "text"
   }
-
 ]

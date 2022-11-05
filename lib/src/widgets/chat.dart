@@ -94,7 +94,7 @@ class Chat extends StatefulWidget {
     required this.user,
     this.userAgent,
     this.useTopSafeAreaInset,
-    this.videoMessageBuilder, this.notificationMessageOptions = const NotificationMessageOptions(),
+    this.videoMessageBuilder,
   });
 
   /// See [Message.audioMessageBuilder].
@@ -291,7 +291,6 @@ class Chat extends StatefulWidget {
   /// See [Message.textMessageOptions].
   final TextMessageOptions textMessageOptions;
 
-  final NotificationMessageOptions notificationMessageOptions;
 
   /// Chat theme. Extend [ChatTheme] class to create your own theme or use
   /// existing one, like the [DefaultChatTheme]. You can customize only certain
@@ -654,7 +653,6 @@ class ChatState extends State<Chat> {
           usePreviewData: widget.usePreviewData,
           userAgent: widget.userAgent,
           videoMessageBuilder: widget.videoMessageBuilder,
-          notificationMessageOptions: widget.notificationMessageOptions,
         );
       }
 
