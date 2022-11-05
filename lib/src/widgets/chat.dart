@@ -445,6 +445,7 @@ class ChatState extends State<Chat> {
                         ),
                       ),
 
+                      // Header profile images.
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -477,6 +478,9 @@ class ChatState extends State<Chat> {
 
                         ],
                       ),
+
+
+                      const Divider(thickness: 1),
                       
                       Flexible(
                         child: widget.messages.isEmpty

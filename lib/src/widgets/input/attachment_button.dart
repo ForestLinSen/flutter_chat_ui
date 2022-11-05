@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../state/inherited_chat_theme.dart';
 import '../state/inherited_l10n.dart';
+import 'dart:math' as math;
 
 /// A class that represents attachment button widget.
 class AttachmentButton extends StatelessWidget {
@@ -48,12 +49,10 @@ class AttachmentButton extends StatelessWidget {
                     ),
                   ),
                 )
-              : InheritedChatTheme.of(context).theme.attachmentButtonIcon ??
-                  Image.asset(
-                    'assets/icon-attachment.png',
-                    color: InheritedChatTheme.of(context).theme.inputTextColor,
-                    package: 'flutter_chat_ui',
-                  ),
+              : Transform.rotate(
+                  angle: 30 * math.pi / 180,
+                  child: const Icon(Icons.attach_file),
+                ),
           onPressed: isLoading ? null : onPressed,
           padding: padding,
           splashRadius: 24,

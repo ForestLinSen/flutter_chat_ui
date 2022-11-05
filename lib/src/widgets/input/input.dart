@@ -10,6 +10,7 @@ import '../state/inherited_l10n.dart';
 import 'attachment_button.dart';
 import 'input_text_field_controller.dart';
 import 'send_button.dart';
+import 'dart:math' as math;
 
 /// A class that represents bottom bar widget with a text field, attachment and
 /// send buttons inside. By default hides send button when text field is empty.
@@ -126,7 +127,7 @@ class _InputState extends State<Input> {
 
   void _handleTextControllerChange() {
     setState(() {
-      _sendButtonVisible = _textController.text.trim() != '';
+      //_sendButtonVisible = _textController.text.trim() != '';
     });
   }
 
@@ -163,10 +164,11 @@ class _InputState extends State<Input> {
         padding: InheritedChatTheme.of(context).theme.inputMargin,
         child: Material(
           borderRadius: InheritedChatTheme.of(context).theme.inputBorderRadius,
-          color: InheritedChatTheme.of(context).theme.inputBackgroundColor,
+          color: Colors.white,
           child: Container(
-            decoration:
-                InheritedChatTheme.of(context).theme.inputContainerDecoration,
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)))
+            ),
             padding: safeAreaInsets,
             child: Row(
               textDirection: TextDirection.ltr,
@@ -177,44 +179,42 @@ class _InputState extends State<Input> {
                     onPressed: widget.onAttachmentPressed,
                     padding: buttonPadding,
                   ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Transform.rotate(angle: 15 * math.pi / 180,
+                    child: Icon(
+                      Icons.flash_on_rounded,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: Padding(
                     padding: textPadding,
                     child: TextField(
                       controller: _textController,
-                      cursorColor: InheritedChatTheme.of(context)
-                          .theme
-                          .inputTextCursorColor,
-                      decoration: InheritedChatTheme.of(context)
-                          .theme
-                          .inputTextDecoration
-                          .copyWith(
-                            hintStyle: InheritedChatTheme.of(context)
-                                .theme
-                                .inputTextStyle
-                                .copyWith(
-                                  color: InheritedChatTheme.of(context)
-                                      .theme
-                                      .inputTextColor
-                                      .withOpacity(0.5),
-                                ),
-                            hintText:
-                                InheritedL10n.of(context).l10n.inputPlaceholder,
-                          ),
+                      cursorColor: Colors.grey,
+                      decoration: InputDecoration(
+                        focusColor: Colors.pinkAccent,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(28.0),
+                          borderSide: const BorderSide(color: Colors.grey, width: 1.5),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(28.0),
+                        ),
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        hintText:
+                        'Write a message',
+                        prefix: const SizedBox(width: 10,),
+                      ),
                       focusNode: _inputFocusNode,
                       keyboardType: TextInputType.multiline,
                       maxLines: 5,
                       minLines: 1,
                       onChanged: widget.options.onTextChanged,
                       onTap: widget.options.onTextFieldTap,
-                      style: InheritedChatTheme.of(context)
-                          .theme
-                          .inputTextStyle
-                          .copyWith(
-                            color: InheritedChatTheme.of(context)
-                                .theme
-                                .inputTextColor,
-                          ),
+                      style: const TextStyle(color: Colors.black),
                       textCapitalization: TextCapitalization.sentences,
                     ),
                   ),
@@ -224,10 +224,10 @@ class _InputState extends State<Input> {
                     minHeight: buttonPadding.bottom + buttonPadding.top + 24,
                   ),
                   child: Visibility(
-                    visible: _sendButtonVisible,
+                    visible: true,
                     child: SendButton(
                       onPressed: _handleSendPressed,
-                      padding: buttonPadding,
+                      padding: const EdgeInsets.only(right: 10),
                     ),
                   ),
                 ),
