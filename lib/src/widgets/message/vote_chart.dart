@@ -54,7 +54,9 @@ class _VoteChartState extends State<VoteChart> {
             children: [
               GestureDetector(
                 onTap: (){
-                  widget.onTapOption(widget.messageId, i);
+                  setState(() {
+                    widget.onTapOption(widget.messageId, i);
+                  });
                 },
                 child: Stack(
                   children: [

@@ -236,7 +236,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _handleVoteTap(String id, int index){
-    print(index);
+    _messages.where((element) => element.id == id).first.metadata!['counts'][index] += 1;
   }
 
   void _handleVoteSendPressed(types.PartialCustom message){
