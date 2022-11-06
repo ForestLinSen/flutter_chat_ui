@@ -53,7 +53,8 @@ class Message extends StatelessWidget {
     required this.textMessageOptions,
     required this.usePreviewData,
     this.userAgent,
-    this.videoMessageBuilder, required this.onVote,
+    this.videoMessageBuilder,
+    required this.onVote,
   });
 
   /// Build an audio message inside predefined bubble.
@@ -216,7 +217,6 @@ class Message extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.only(bottom: 5),
-
       alignment: bubbleRtlAlignment == BubbleRtlAlignment.left
           ? currentUserIsAuthor
               ? AlignmentDirectional.centerEnd
@@ -228,58 +228,80 @@ class Message extends StatelessWidget {
           ? EdgeInsetsDirectional.only(
               bottom: 4,
               end: isMobile ? query.padding.right : 0,
-              start: message.type == types.MessageType.custom ?  0 : 20 + (isMobile ? query.padding.left : 0),
+              start: message.type == types.MessageType.custom
+                  ? 0
+                  : 20 + (isMobile ? query.padding.left : 0),
             )
           : EdgeInsets.only(
               bottom: 4,
-              left: message.type == types.MessageType.custom ? 0 : 20 + (isMobile ? query.padding.left : 0),
-              right: isMobile && message.type != types.MessageType.custom ? 20 : 0,
+              left: message.type == types.MessageType.custom
+                  ? 0
+                  : 20 + (isMobile ? query.padding.left : 0),
+              right:
+                  isMobile && message.type != types.MessageType.custom ? 20 : 0,
             ),
       child: Row(
         // Sen Edited.
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: message.type != types.MessageType.custom ? MainAxisSize.min : MainAxisSize.max,
+        mainAxisSize: message.type != types.MessageType.custom
+            ? MainAxisSize.min
+            : MainAxisSize.max,
         textDirection: bubbleRtlAlignment == BubbleRtlAlignment.left
             ? null
             : TextDirection.ltr,
         children: [
           // Sen Edited.
-          if (!currentUserIsAuthor && showUserAvatars && message.type != types.MessageType.custom) _avatarBuilder(),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: messageWidth.toDouble(),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onDoubleTap: () => onMessageDoubleTap?.call(context, message),
-                  onLongPress: () => onMessageLongPress?.call(context, message),
-                  onTap: () => onMessageTap?.call(context, message),
-                  child: onMessageVisibilityChanged != null
-                      ? VisibilityDetector(
-                          key: Key(message.id),
-                          onVisibilityChanged: (visibilityInfo) =>
-                              onMessageVisibilityChanged!(
-                            message,
-                            visibilityInfo.visibleFraction > 0.1,
-                          ),
-                          child: _bubbleBuilder(
+          Container(
+            width: (!currentUserIsAuthor &&
+                message.type != types.MessageType.custom) ? 50 : 0,
+            child: (!currentUserIsAuthor &&
+                    message.type != types.MessageType.custom)
+                ? _avatarBuilder()
+                : const SizedBox(
+                    width: 24,
+                  ),
+          ),
+
+          Container(
+            padding: EdgeInsets.only(left: 10),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: messageWidth.toDouble(),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onDoubleTap: () =>
+                        onMessageDoubleTap?.call(context, message),
+                    onLongPress: () =>
+                        onMessageLongPress?.call(context, message),
+                    onTap: () => onMessageTap?.call(context, message),
+                    child: onMessageVisibilityChanged != null
+                        ? VisibilityDetector(
+                            key: Key(message.id),
+                            onVisibilityChanged: (visibilityInfo) =>
+                                onMessageVisibilityChanged!(
+                              message,
+                              visibilityInfo.visibleFraction > 0.1,
+                            ),
+                            child: _bubbleBuilder(
+                              context,
+                              borderRadius.resolve(Directionality.of(context)),
+                              currentUserIsAuthor,
+                              enlargeEmojis,
+                            ),
+                          )
+                        : _bubbleBuilder(
                             context,
                             borderRadius.resolve(Directionality.of(context)),
                             currentUserIsAuthor,
                             enlargeEmojis,
                           ),
-                        )
-                      : _bubbleBuilder(
-                          context,
-                          borderRadius.resolve(Directionality.of(context)),
-                          currentUserIsAuthor,
-                          enlargeEmojis,
-                        ),
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -338,12 +360,13 @@ class Message extends StatelessWidget {
             : const SizedBox();
       case types.MessageType.custom:
         final customMessage = message as types.CustomMessage;
-        if(customMessage.metadata?['customType'] == 'vote'){
+        if (customMessage.metadata?['customType'] == 'vote') {
           return VoteMessage(
             message: customMessage,
-            title: customMessage.metadata!['title'], onVote: onVote,
+            title: customMessage.metadata!['title'],
+            onVote: onVote,
           );
-        }else{
+        } else {
           return NotificationMessage(
             message: types.TextMessage(
               id: customMessage.id,
@@ -353,7 +376,6 @@ class Message extends StatelessWidget {
             title: customMessage.metadata?['title'] ?? '',
           );
         }
-
 
       case types.MessageType.file:
         final fileMessage = message as types.FileMessage;

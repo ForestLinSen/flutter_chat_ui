@@ -26,6 +26,19 @@
   },
   {
     "author": {
+      "firstName": "Janice",
+      "id": "e52552f4-835d-4dbe-ba77-b076e659774d",
+      "imageUrl": "https://i.pravatar.cc/300?u=e52552f4-835d-4dbe-ba77-b076e659774d",
+      "lastName": "King"
+    },
+    "createdAt": 1655648402001,
+    "id": "4e048753-2d60-4144-bc28-9967050aaf13",
+    "status": "seen",
+    "text": "What a ~nice~ _wonderful_ sunset! 😻",
+    "type": "text"
+  },
+  {
+    "author": {
       "firstName": "Matthew",
       "id": "82091008-a484-4a89-ae75-a22bf8d6f3ac",
       "lastName": "White"
