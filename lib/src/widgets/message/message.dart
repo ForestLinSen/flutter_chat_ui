@@ -338,8 +338,21 @@ class Message extends StatelessWidget {
         final customMessage = message as types.CustomMessage;
         if(customMessage.metadata?['customType'] == 'vote'){
           return VoteMessage(
-            message: customMessage,
-            title: customMessage.metadata!['title'],
+            message: types.TextMessage(
+              id: customMessage.id,
+              author: customMessage.author,
+              text: customMessage.metadata?['text'] ?? 'No data',
+            ),
+            title: customMessage.metadata?['title'] ?? '',
+          );
+        }else if(customMessage.metadata?['customType'] == 'vote'){
+          return NotificationMessage(
+            message: types.TextMessage(
+              id: customMessage.id,
+              author: customMessage.author,
+              text: customMessage.metadata?['text'] ?? 'No data',
+            ),
+            title: customMessage.metadata?['title'] ?? '',
           );
         }else{
           return NotificationMessage(

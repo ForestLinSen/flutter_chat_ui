@@ -190,7 +190,7 @@ class TextMessage extends StatelessWidget {
         Row(
           mainAxisAlignment: user.id == message.author.id ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
-            if(message.author.id != user.id) UserName(author: message.author),
+            UserName(author: message.author),
             Padding(
               padding: const EdgeInsets.only(bottom: 6),
               child: Text(
@@ -202,6 +202,10 @@ class TextMessage extends StatelessWidget {
             ),
           ],
         ),
+
+
+
+
         // if (showName)
         //   nameBuilder?.call(message.author.id) ??
         //       UserName(author: message.author),

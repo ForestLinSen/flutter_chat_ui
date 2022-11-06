@@ -14,7 +14,7 @@ class VoteMessage extends StatelessWidget {
     this.title = '',
   });
 
-  final types.CustomMessage message;
+  final types.TextMessage message;
   final String title;
 
   @override
@@ -43,7 +43,7 @@ class VoteMessage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '${InheritedUser.of(context).user.firstName} started a poll 🗳️',
+                  '${message.author.firstName} started a poll 🗳️',
                   style: const TextStyle(
                       fontSize: 18,
                       color: Colors.pinkAccent,
@@ -74,7 +74,7 @@ class VoteMessage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          title,
+                          "Text or Train 🚍🚉",
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
@@ -91,8 +91,13 @@ class VoteMessage extends StatelessWidget {
 
                 // Vote Chart.
                 VoteChart(
-                  options: message.metadata!['options'] ?? ['No Data'],
-                  voteCount: message.metadata!['counts'] ?? [0],
+                  options: [
+                    "Option1",
+                    "Option2",
+                    "Option3",
+                    "Option4",
+                  ],
+                  voteCount: [0,0,0,0],
                   width: min(MediaQuery.of(context).size.width * 0.90, 1200),
                 ),
               ],

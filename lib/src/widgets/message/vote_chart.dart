@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class VoteChart extends StatefulWidget {
+class VoteChart extends StatelessWidget {
   const VoteChart(
       {Key? key,
       required this.options,
@@ -11,19 +11,14 @@ class VoteChart extends StatefulWidget {
       : super(key: key);
 
   final List<String> options;
-  final List<int> voteCount;
+  final List<num> voteCount;
   final double width;
 
-  @override
-  State<VoteChart> createState() => _VoteChartState();
-}
-
-class _VoteChartState extends State<VoteChart> {
-  int findMaxIndex(List<num> list) {
+  int findMaxIndex(List<num> list){
     var max = list[0];
     var maxIndex = 0;
-    for (var i = 0; i < list.length; i++) {
-      if (list[i] > max) {
+    for(var i=0; i<list.length; i++){
+      if(list[i] > max){
         max = list[i];
         maxIndex = i;
       }
@@ -33,62 +28,47 @@ class _VoteChartState extends State<VoteChart> {
 
   @override
   Widget build(BuildContext context) {
-    final totalCount = widget.voteCount.reduce((a, b) => a + b).toDouble();
-    final maxIndex = findMaxIndex(widget.voteCount);
+    final totalCount = voteCount.reduce((a, b) => a + b).toDouble();
+    final maxIndex = findMaxIndex(voteCount);
 
     return ListView.builder(
       shrinkWrap: true,
       padding: const EdgeInsets.only(bottom: 10),
       itemBuilder: (context, i) {
-        final ratio =
-            widget.voteCount[i] == 0 ? 0 : widget.voteCount[i].toDouble() / totalCount;
+        final ratio = voteCount[i] == 0 ? 0 : voteCount[i].toDouble() / totalCount;
         return Container(
           padding: const EdgeInsets.only(left: 10, bottom: 10),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    widget.voteCount[i] += 1;
-                  });
-                },
-                child: Stack(
-                  children: [
-                    Container(
-                      width: max(0.7 * widget.width * ratio, 5),
-                      height: 22,
-                      padding:
-                          const EdgeInsets.only(left: 5, top: 2, bottom: 2),
-                      decoration: BoxDecoration(
-                        color: i == maxIndex && totalCount != 0
-                            ? Colors.pinkAccent
-                            : Colors.black.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        widget.options[i],
-                        style: TextStyle(
-                          color: i == maxIndex && totalCount != 0
-                              ? Colors.white
-                              : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
+              Stack(children: [
+                Container(
+                  width: max(0.7 * width * ratio, 5),
+                  height: 22,
+                  padding: const EdgeInsets.only(left: 5, top: 2, bottom: 2),
+                  decoration: BoxDecoration(
+                      color: i == maxIndex && totalCount != 0 ? Colors.pinkAccent : Colors.black.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(5),),
                 ),
-              ),
+
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Text(
+                    options[i],
+                    style: TextStyle(color: i == maxIndex && totalCount != 0 ? Colors.white : Colors.black),
+                  ),
+                ),
+              ],),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text('${(ratio * 100).toStringAsFixed(0).toString()}%'),
+                child:
+                    Text('${(ratio * 100).toStringAsFixed(0).toString()}%'),
               ),
             ],
           ),
         );
       },
-      itemCount: widget.options.length,
+      itemCount: options.length,
     );
   }
 }

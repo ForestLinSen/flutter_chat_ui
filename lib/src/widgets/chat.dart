@@ -95,7 +95,7 @@ class Chat extends StatefulWidget {
     this.userAgent,
     this.useTopSafeAreaInset,
     this.videoMessageBuilder,
-    required this.onNotificationSendPressed, required this.onVoteSendPressed,
+    required this.onNotificationSendPressed,
   });
 
   /// See [Message.audioMessageBuilder].
@@ -263,8 +263,6 @@ class Chat extends StatefulWidget {
   final void Function(types.PartialText) onSendPressed;
 
   final void Function(types.PartialCustom) onNotificationSendPressed;
-  final void Function(types.PartialCustom) onVoteSendPressed;
-
 
   /// See [ChatList.scrollController].
   /// If provided, you cannot use the scroll to message functionality.
@@ -530,7 +528,7 @@ class ChatState extends State<Chat> {
                             isAttachmentUploading: widget.isAttachmentUploading,
                             onAttachmentPressed: widget.onAttachmentPressed,
                             onSendPressed: widget.onSendPressed,
-                            options: widget.inputOptions, onNotificationSendPressed: widget.onNotificationSendPressed, onVoteSendPressed:widget.onVoteSendPressed,
+                            options: widget.inputOptions, onNotificationSendPressed: widget.onNotificationSendPressed,
                           ),
                     ],
                   ),

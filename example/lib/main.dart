@@ -36,7 +36,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<types.Message> _messages = [];
-  final _user = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3ac', firstName: 'Sen');
+  final _user = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3ac');
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class _ChatPageState extends State<ChatPage> {
           onSendPressed: _handleSendPressed,
           showUserAvatars: true,
           showUserNames: true,
-          user: _user, onNotificationSendPressed: _handleNotificationSendPressed, onVoteSendPressed: _handleVoteSendPressed,
+          user: _user, onNotificationSendPressed: _handleNotificationSendPressed,
         ),
       );
 
@@ -225,17 +225,6 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _handleNotificationSendPressed(types.PartialCustom message) {
-    final customMessage = types.CustomMessage(
-      author: _user,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: const Uuid().v4(),
-      metadata: message.metadata,
-    );
-
-    _addMessage(customMessage);
-  }
-
-  void _handleVoteSendPressed(types.PartialCustom message){
     final customMessage = types.CustomMessage(
       author: _user,
       createdAt: DateTime.now().millisecondsSinceEpoch,
