@@ -45,7 +45,7 @@ class VoteMessage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '${message.metadata?['options']} started a poll 🗳️',
+                  '${message.metadata?['username']} started a poll 🗳️',
                   style: const TextStyle(
                       fontSize: 18,
                       color: Colors.pinkAccent,
