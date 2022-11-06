@@ -25,6 +25,7 @@ class Input extends StatefulWidget {
     required this.onSendPressed,
     this.options = const InputOptions(),
     required this.onNotificationSendPressed,
+    required this.onVoteSendPressed,
   });
 
   /// Whether attachment is uploading. Will replace attachment button with a
@@ -41,6 +42,7 @@ class Input extends StatefulWidget {
   final void Function(types.PartialText) onSendPressed;
 
   final void Function(types.PartialCustom) onNotificationSendPressed;
+  final void Function(types.PartialCustom) onVoteSendPressed;
 
   /// Customisation options for the [Input].
   final InputOptions options;
@@ -188,20 +190,23 @@ class _InputState extends State<Input> {
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Transform.rotate(
-                      angle: 15 * math.pi / 180,
-                      child: IconButton(
-                        onPressed: () {
-                          showCupertinoModalPopup(
-                              context: context,
-                              builder: (context) => CustomMessageActionSheet(
-                                  onSendPressed:
-                                      widget.onNotificationSendPressed),);
-                        },
-                        icon: const Icon(
-                          Icons.flash_on_rounded,
-                          color: Colors.grey,
-                        ),
-                      ),),
+                    angle: 15 * math.pi / 180,
+                    child: IconButton(
+                      onPressed: () {
+                        showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) => CustomMessageActionSheet(
+                            onSendPressed: widget.onNotificationSendPressed,
+                            onVotePressed: widget.onVoteSendPressed
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.flash_on_rounded,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: Padding(

@@ -95,7 +95,7 @@ class Chat extends StatefulWidget {
     this.userAgent,
     this.useTopSafeAreaInset,
     this.videoMessageBuilder,
-    required this.onNotificationSendPressed,
+    required this.onNotificationSendPressed, required this.onVoteSendPressed, required this.onVote,
   });
 
   /// See [Message.audioMessageBuilder].
@@ -263,6 +263,9 @@ class Chat extends StatefulWidget {
   final void Function(types.PartialText) onSendPressed;
 
   final void Function(types.PartialCustom) onNotificationSendPressed;
+  final void Function(types.PartialCustom) onVoteSendPressed;
+  final Function(String id, int index) onVote;
+
 
   /// See [ChatList.scrollController].
   /// If provided, you cannot use the scroll to message functionality.
@@ -484,7 +487,7 @@ class ChatState extends State<Chat> {
 
 
                       const Divider(thickness: 1),
-                      
+
                       Flexible(
                         child: widget.messages.isEmpty
                             ? SizedBox.expand(
@@ -528,7 +531,7 @@ class ChatState extends State<Chat> {
                             isAttachmentUploading: widget.isAttachmentUploading,
                             onAttachmentPressed: widget.onAttachmentPressed,
                             onSendPressed: widget.onSendPressed,
-                            options: widget.inputOptions, onNotificationSendPressed: widget.onNotificationSendPressed,
+                            options: widget.inputOptions, onNotificationSendPressed: widget.onNotificationSendPressed, onVoteSendPressed:widget.onVoteSendPressed,
                           ),
                     ],
                   ),
@@ -659,7 +662,7 @@ class ChatState extends State<Chat> {
           textMessageOptions: widget.textMessageOptions,
           usePreviewData: widget.usePreviewData,
           userAgent: widget.userAgent,
-          videoMessageBuilder: widget.videoMessageBuilder,
+          videoMessageBuilder: widget.videoMessageBuilder, onVote: widget.onVote,
         );
       }
 

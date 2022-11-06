@@ -53,7 +53,7 @@ class Message extends StatelessWidget {
     required this.textMessageOptions,
     required this.usePreviewData,
     this.userAgent,
-    this.videoMessageBuilder,
+    this.videoMessageBuilder, required this.onVote,
   });
 
   /// Build an audio message inside predefined bubble.
@@ -117,6 +117,8 @@ class Message extends StatelessWidget {
 
   /// See [UserAvatar.onAvatarTap].
   final void Function(types.User)? onAvatarTap;
+
+  final Function(String messageId, int index) onVote;
 
   /// Called when user double taps on any message.
   final void Function(BuildContext context, types.Message)? onMessageDoubleTap;
@@ -338,21 +340,8 @@ class Message extends StatelessWidget {
         final customMessage = message as types.CustomMessage;
         if(customMessage.metadata?['customType'] == 'vote'){
           return VoteMessage(
-            message: types.TextMessage(
-              id: customMessage.id,
-              author: customMessage.author,
-              text: customMessage.metadata?['text'] ?? 'No data',
-            ),
-            title: customMessage.metadata?['title'] ?? '',
-          );
-        }else if(customMessage.metadata?['customType'] == 'vote'){
-          return NotificationMessage(
-            message: types.TextMessage(
-              id: customMessage.id,
-              author: customMessage.author,
-              text: customMessage.metadata?['text'] ?? 'No data',
-            ),
-            title: customMessage.metadata?['title'] ?? '',
+            message: customMessage,
+            title: customMessage.metadata!['title'], onVote: onVote,
           );
         }else{
           return NotificationMessage(

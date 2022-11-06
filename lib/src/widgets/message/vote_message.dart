@@ -12,10 +12,12 @@ class VoteMessage extends StatelessWidget {
     super.key,
     required this.message,
     this.title = '',
+    required this.onVote,
   });
 
-  final types.TextMessage message;
+  final types.CustomMessage message;
   final String title;
+  final Function(String messageId, int index) onVote;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class VoteMessage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '${message.author.firstName} started a poll 🗳️',
+                  '${InheritedUser.of(context).user.firstName} started a poll 🗳️',
                   style: const TextStyle(
                       fontSize: 18,
                       color: Colors.pinkAccent,
@@ -58,8 +60,8 @@ class VoteMessage extends StatelessWidget {
           Container(
             width: min(MediaQuery.of(context).size.width * 0.90, 1200),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.pinkAccent, width: 1.5),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.pinkAccent, width: 1.5),
             ),
             clipBehavior: Clip.hardEdge,
             child: Column(
@@ -74,7 +76,7 @@ class VoteMessage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Text or Train 🚍🚉",
+                          title,
                           style: TextStyle(color: Colors.white),
                         ),
                         Text(
@@ -91,14 +93,11 @@ class VoteMessage extends StatelessWidget {
 
                 // Vote Chart.
                 VoteChart(
-                  options: [
-                    "Option1",
-                    "Option2",
-                    "Option3",
-                    "Option4",
-                  ],
-                  voteCount: [0,0,0,0],
+                  options: message.metadata!['options'] ?? ['No Data'],
+                  voteCount: message.metadata!['counts'] ?? [0],
                   width: min(MediaQuery.of(context).size.width * 0.90, 1200),
+                  onTapOption: onVote,
+                  messageId: message.id,
                 ),
               ],
             ),
