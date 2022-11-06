@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
 import '../../../flutter_chat_ui.dart';
+import '../state/inherited_user.dart';
 
 class AddVoteDialog extends StatefulWidget {
   const AddVoteDialog({super.key, required this.onPressed});
+
   final void Function(types.PartialCustom) onPressed;
 
   @override
@@ -26,7 +28,8 @@ class _AddVoteDialogState extends State<AddVoteDialog> {
             CupertinoTextField(
               controller: _titleController,
               placeholder: 'Vote Title',
-              placeholderStyle: const TextStyle(fontWeight: FontWeight.w700, color: Colors.grey),
+              placeholderStyle: const TextStyle(
+                  fontWeight: FontWeight.w700, color: Colors.grey),
             ),
           ],
         ),
@@ -76,15 +79,16 @@ class _AddVoteDialogState extends State<AddVoteDialog> {
                 }
               }
 
-              if(optionsList.isEmpty){ return; }
+              if (optionsList.isEmpty) {
+                return;
+              }
 
-              final customNotification = types.PartialCustom(
-
-                  metadata: {
+              final customNotification = types.PartialCustom(metadata: {
                 'title': _titleController.text,
                 'customType': 'vote',
                 'options': optionsList,
                 'counts': count,
+                'username': InheritedUser.of(context).user.firstName,
               });
 
               widget.onPressed(customNotification);
