@@ -26,6 +26,7 @@ class Input extends StatefulWidget {
     this.options = const InputOptions(),
     required this.onNotificationSendPressed,
     required this.onVoteSendPressed,
+    required this.username,
   });
 
   /// Whether attachment is uploading. Will replace attachment button with a
@@ -43,6 +44,7 @@ class Input extends StatefulWidget {
 
   final void Function(types.PartialCustom) onNotificationSendPressed;
   final void Function(types.PartialCustom) onVoteSendPressed;
+  final String username;
 
   /// Customisation options for the [Input].
   final InputOptions options;
@@ -176,7 +178,7 @@ class _InputState extends State<Input> {
             decoration: BoxDecoration(
                 border: Border(
                     top: BorderSide(
-                        width: 1, color: Colors.grey.withOpacity(0.3)))),
+                        width: 1, color: Colors.grey.withOpacity(0.3))),),
             padding: safeAreaInsets,
             child: Row(
               textDirection: TextDirection.ltr,
@@ -196,9 +198,8 @@ class _InputState extends State<Input> {
                         showCupertinoModalPopup(
                           context: context,
                           builder: (context) => CustomMessageActionSheet(
-                            onSendPressed: widget.onNotificationSendPressed,
-                            onVotePressed: widget.onVoteSendPressed
-                          ),
+                              onSendPressed: widget.onNotificationSendPressed,
+                              onVotePressed: widget.onVoteSendPressed, username: widget.username,),
                         );
                       },
                       icon: const Icon(

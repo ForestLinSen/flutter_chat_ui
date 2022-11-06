@@ -36,7 +36,8 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<types.Message> _messages = [];
-  final _user = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3ac', firstName: 'Sen');
+  final _user = const types.User(
+      id: '82091008-a484-4a89-ae75-a22bf8d6f3ac', firstName: 'Sen');
 
   @override
   void initState() {
@@ -46,7 +47,9 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text("Hi"),),
+        appBar: AppBar(
+          title: Text("Hi"),
+        ),
         body: Chat(
           messages: _messages,
           onAttachmentPressed: _handleAttachmentPressed,
@@ -55,7 +58,10 @@ class _ChatPageState extends State<ChatPage> {
           onSendPressed: _handleSendPressed,
           showUserAvatars: true,
           showUserNames: true,
-          user: _user, onNotificationSendPressed: _handleNotificationSendPressed, onVoteSendPressed: _handleVoteSendPressed, onVote: _handleVoteTap,
+          user: _user,
+          onNotificationSendPressed: _handleNotificationSendPressed,
+          onVoteSendPressed: _handleVoteSendPressed,
+          onVote: _handleVoteTap,
         ),
       );
 
@@ -235,11 +241,12 @@ class _ChatPageState extends State<ChatPage> {
     _addMessage(customMessage);
   }
 
-  void _handleVoteTap(String id, int index){
-    _messages.where((element) => element.id == id).first.metadata!['counts'][index] += 1;
+  void _handleVoteTap(String id, int index) {
+    _messages.where((element) => element.id == id).first.metadata!['counts']
+        [index] += 1;
   }
 
-  void _handleVoteSendPressed(types.PartialCustom message){
+  void _handleVoteSendPressed(types.PartialCustom message) {
     final customMessage = types.CustomMessage(
       author: _user,
       createdAt: DateTime.now().millisecondsSinceEpoch,

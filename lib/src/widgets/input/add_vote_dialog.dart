@@ -6,9 +6,9 @@ import '../../../flutter_chat_ui.dart';
 import '../state/inherited_user.dart';
 
 class AddVoteDialog extends StatefulWidget {
-  const AddVoteDialog({super.key, required this.onPressed});
-
+  const AddVoteDialog({super.key, required this.onPressed, required this.username});
   final void Function(types.PartialCustom) onPressed;
+  final String username;
 
   @override
   State<AddVoteDialog> createState() => _AddVoteDialogState();
@@ -22,7 +22,9 @@ class _AddVoteDialogState extends State<AddVoteDialog> {
   ];
 
   @override
-  Widget build(BuildContext context) => CupertinoAlertDialog(
+  Widget build(BuildContext context) {
+
+    return CupertinoAlertDialog(
         title: Column(
           children: [
             CupertinoTextField(
@@ -54,7 +56,7 @@ class _AddVoteDialogState extends State<AddVoteDialog> {
                     setState(() {
                       _controllers.add(InputTextFieldController());
                     });
-                  }),
+                  },),
             ],
           ),
         ),
@@ -88,7 +90,7 @@ class _AddVoteDialogState extends State<AddVoteDialog> {
                 'customType': 'vote',
                 'options': optionsList,
                 'counts': count,
-                'username': InheritedUser.of(context).user.firstName,
+                'username': widget.username,
               });
 
               widget.onPressed(customNotification);
@@ -96,4 +98,5 @@ class _AddVoteDialogState extends State<AddVoteDialog> {
           ),
         ],
       );
+  }
 }

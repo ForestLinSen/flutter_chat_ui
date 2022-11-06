@@ -24,7 +24,8 @@ class AttachmentButton extends StatelessWidget {
   final EdgeInsets padding;
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) =>
+      Container(
         margin: InheritedChatTheme.of(context).theme.attachmentButtonMargin ??
             const EdgeInsetsDirectional.fromSTEB(
               8,
