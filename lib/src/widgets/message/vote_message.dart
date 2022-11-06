@@ -93,8 +93,8 @@ class VoteMessage extends StatelessWidget {
 
                 // Vote Chart.
                 VoteChart(
-                  options: message.metadata!['options'] ?? ['No Data'],
-                  voteCount: message.metadata!['counts'] ?? [0],
+                  options: List<String>.from(message.metadata?['options'] ?? ['No data']),
+                  voteCount: List<int>.from(message.metadata?['counts'] ?? [0]),
                   width: min(MediaQuery.of(context).size.width * 0.90, 1200),
                   onTapOption: onVote,
                   messageId: message.id,
